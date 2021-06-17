@@ -4,6 +4,21 @@ spring:
       enabled: true
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:octoevents
+    url: jdbc:h2:mem:conversion
     username: root
     password: toor
+  flyway:
+    enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: false
+exchange:
+  api:
+    key: fd79253650452442e4c142b29709604a
+    url: http://api.exchangeratesapi.io/v1/

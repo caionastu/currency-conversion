@@ -36,21 +36,21 @@ public class ExceptionAdvice {
         return errorMessage;
     }
 
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    @ExceptionHandler(BusinessException.class)
-//    public ErrorMessage handleBusinessExceptions(BusinessException exception, Locale locale) {
-//        return handleExceptionMessage("business.exception.title", exception, locale);
-//    }
-//
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    @ExceptionHandler(NotFoundException.class)
-//    public ErrorMessage handleNotFoundExceptions(NotFoundException exception, Locale locale) {
-//        return handleExceptionMessage("notFound.exception.title", exception, locale);
-//    }
-//
-//    private ErrorMessage handleExceptionMessage(String keyMessage, BusinessException exception, Locale locale) {
-//        ErrorMessage errorMessage = new ErrorMessage(messageSource.getMessage(keyMessage, null, locale));
-//        errorMessage.addDetail(messageSource.getMessage(exception.getKeyMessage(), exception.getArguments(), locale));
-//        return errorMessage;
-//    }
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(BusinessException.class)
+    public ErrorMessage handleBusinessExceptions(BusinessException exception, Locale locale) {
+        return handleExceptionMessage("business.exception.title", exception, locale);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public ErrorMessage handleNotFoundExceptions(NotFoundException exception, Locale locale) {
+        return handleExceptionMessage("notFound.exception.title", exception, locale);
+    }
+
+    private ErrorMessage handleExceptionMessage(String keyMessage, BusinessException exception, Locale locale) {
+        ErrorMessage errorMessage = new ErrorMessage(messageSource.getMessage(keyMessage, null, locale));
+        errorMessage.addDetail(messageSource.getMessage(exception.getKeyMessage(), exception.getArguments(), locale));
+        return errorMessage;
+    }
 }
