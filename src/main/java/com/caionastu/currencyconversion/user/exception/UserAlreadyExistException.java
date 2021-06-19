@@ -1,12 +1,15 @@
 package com.caionastu.currencyconversion.user.exception;
 
-import com.caionastu.currencyconversion.common.exception.NotFoundException;
+import com.caionastu.currencyconversion.common.exception.BusinessException;
+import lombok.Getter;
 
-public class UserAlreadyExistException extends NotFoundException {
+public class UserAlreadyExistException extends BusinessException {
 
-    private String name;
+    @Getter
+    private final String name;
 
     public UserAlreadyExistException(String name) {
-        super("{user.exist}", name);
+        super("user.exception.exist", name);
+        this.name = name;
     }
 }

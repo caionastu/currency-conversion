@@ -20,5 +20,7 @@ spring:
         format_sql: false
 exchange:
   api:
-    key: fd79253650452442e4c142b29709604a
-    url: http://api.exchangeratesapi.io/v1/
+    key: 5fbb1121ef47693b402390a1ac314ab3
+    url: http://api.exchangeratesapi.io/v1/latest?
+    cache:
+      expire-time: 12   # in hours. 12h is the default
