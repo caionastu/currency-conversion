@@ -49,7 +49,7 @@ public class UserController {
                     throw new UserAlreadyExistException(request.getName());
                 });
 
-        User newUser = request.toEntity();
+        User newUser = User.from(request);
         repository.save(newUser);
 
         log.info("User created. Id: {}.", newUser.getId());

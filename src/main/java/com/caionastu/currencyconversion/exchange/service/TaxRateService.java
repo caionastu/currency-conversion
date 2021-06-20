@@ -32,9 +32,13 @@ public class TaxRateService {
 
         BigDecimal originRate = response.getTaxRate(request.getOriginCurrency());
         BigDecimal destinyRate = response.getTaxRate(request.getDestinyCurrency());
-        BigDecimal taxRate = destinyRate.divide(originRate, DEFAULT_SCALE, RoundingMode.HALF_EVEN);
 
+        BigDecimal taxRate = calculateTaxRate(originRate, destinyRate);
         log.info("Tax rate obtained: {}.", taxRate);
         return taxRate;
+    }
+
+    private BigDecimal calculateTaxRate(BigDecimal originRate, BigDecimal destinyRate){
+       return destinyRate.divide(originRate, DEFAULT_SCALE, RoundingMode.HALF_EVEN);
     }
 }

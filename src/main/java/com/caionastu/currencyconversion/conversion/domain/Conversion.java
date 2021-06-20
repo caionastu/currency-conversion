@@ -2,10 +2,7 @@ package com.caionastu.currencyconversion.conversion.domain;
 
 import com.caionastu.currencyconversion.conversion.application.request.ConversionRequest;
 import com.caionastu.currencyconversion.user.domain.User;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -49,7 +46,7 @@ public class Conversion {
         return originValue.multiply(taxRate);
     }
 
-    public static Conversion from(ConversionRequest request, BigDecimal taxRate, User user) {
+    public static Conversion from(@NonNull ConversionRequest request, @NonNull BigDecimal taxRate, @NonNull User user) {
         return new Conversion(
                 null,
                 user,

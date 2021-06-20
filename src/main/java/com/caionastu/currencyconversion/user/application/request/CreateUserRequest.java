@@ -18,7 +18,4 @@ public class CreateUserRequest {
     @Size(min = 4, max = 50, message = "{user.name.size}")
     private String name;
 
-    public User toEntity() {
-        return new User(null, name);
-    }
 }

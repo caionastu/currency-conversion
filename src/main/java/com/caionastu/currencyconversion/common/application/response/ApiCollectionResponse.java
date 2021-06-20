@@ -29,4 +29,8 @@ public class ApiCollectionResponse<T> {
                 page.getContent());
     }
 
+    public boolean hasNext() {
+        return hasNext;
+    }
+
 }

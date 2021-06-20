@@ -1,9 +1,7 @@
 package com.caionastu.currencyconversion.user.domain;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.caionastu.currencyconversion.user.application.request.CreateUserRequest;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,5 +21,9 @@ public class User {
 
     @Column
     private String name;
+
+    public static User from(@NonNull CreateUserRequest request) {
+        return new User(null, request.getName());
+    }
 
 }

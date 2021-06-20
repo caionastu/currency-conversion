@@ -4,12 +4,6 @@ create table `user`(
     primary key (id)
 );
 
-insert into `user` values ('112bd468-1853-45b7-8d91-bda107dfcf7e', 'Caio');
-insert into `user` values ('51272622-d059-41b0-aa53-a76b5c01f427', 'Matheus');
-insert into `user` values ('151aa02e-7d4f-44f5-98f6-a9c8f35a9f94', 'José');
-insert into `user` values ('6bfb46db-4586-472f-a3be-5888c8702a90', 'Luis');
-insert into `user` values ('a47be715-a79c-4666-b40f-d33629879fb2', 'Luiz');
-
 create table conversion (
     id uuid not null,
     user_id uuid not null,

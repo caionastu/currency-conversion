@@ -13,7 +13,9 @@ import com.caionastu.currencyconversion.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -36,6 +38,16 @@ public class ConversionController {
     @GetMapping(path = "/user/{userId}")
     public ResponseEntity<ApiCollectionResponse<ConversionResponse>> findByUser(@PathVariable UUID userId, @ApiIgnore Pageable pageable) {
         log.info("Receiving request to find all conversion transactions from user: {}.", userId);
+
+        userRepository.findById(userId)
+                .orElseThrow(() -> {
+                    log.error("User not find with id: {}", userId);
+                    throw new UserNotFoundException(userId);
+                });
+
+        if (!pageable.getSort().isSorted()) {
+            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "date"));
+        }
 
         Page<ConversionResponse> conversions = repository.findByUserId(userId, pageable)
                 .map(ConversionResponse::from);

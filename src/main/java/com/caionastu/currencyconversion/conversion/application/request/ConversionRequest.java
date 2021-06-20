@@ -19,14 +19,14 @@ public class ConversionRequest {
     @NotNull(message = "{conversion.userId.notNull}")
     private UUID userId;
 
-    @ValidCurrency
     @NotBlank(message = "{conversion.origin.notBlank}")
     @Size(min = 3, max = 3, message = "{conversion.originCurrency.size}")
+    @ValidCurrency
     private String originCurrency;
 
-    @ValidCurrency
     @NotBlank(message = "{conversion.destiny.notBlank}")
     @Size(min = 3, max = 3, message = "{conversion.destinyCurrency.size}")
+    @ValidCurrency
     private String destinyCurrency;
 
     @Positive(message = "{conversion.value.positive}")
@@ -34,7 +34,7 @@ public class ConversionRequest {
     private BigDecimal originValue;
 
     public boolean isSameCurrency() {
-        return originCurrency.equals(destinyCurrency);
+        return getOriginCurrency().equals(getDestinyCurrency());
     }
 
     public String getOriginCurrency() {
