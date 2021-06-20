@@ -35,24 +35,39 @@ public class ConversionController {
     @ApiPageable
     @GetMapping(path = "/user/{userId}")
     public ResponseEntity<ApiCollectionResponse<ConversionResponse>> findByUser(@PathVariable UUID userId, @ApiIgnore Pageable pageable) {
+        log.info("Receiving request to find all conversion transactions from user: {}", userId);
+
         Page<ConversionResponse> conversions = repository.findByUserId(userId, pageable)
                 .map(ConversionResponse::from);
 
         ApiCollectionResponse<ConversionResponse> response = ApiCollectionResponse.from(conversions);
+
+        log.info("Retrieving all conversion transactions from user: {}", userId);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
     public ResponseEntity<ConversionResponse> convert(@RequestBody @Valid ConversionRequest request) {
+        log.info("Receiving request to convert two currencies. Request: {}", request);
+
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new UserNotFoundException(request.getUserId()));
+                .orElseThrow(() -> {
+                    log.error("User not find with id: {}", request.getUserId());
+                    throw new UserNotFoundException(request.getUserId());
+                });
 
         BigDecimal taxRate = taxRateService.get(request);
-        Conversion conversion = Conversion.from(request, taxRate, user);
 
+        log.info("Saving conversion transaction.");
+
+        Conversion conversion = Conversion.from(request, taxRate, user);
         repository.save(conversion);
 
+        log.info("Conversion transaction saved in database. Id: {}", conversion);
+
         ConversionResponse response = ConversionResponse.from(conversion);
+
+        log.info("Conversion request completed.");
         return ResponseEntity.ok(response);
     }
 

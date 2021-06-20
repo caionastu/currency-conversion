@@ -23,4 +23,4 @@ exchange:
     key: 5fbb1121ef47693b402390a1ac314ab3
     url: http://api.exchangeratesapi.io/v1/latest?
     cache:
-      expire-time: 12   # in hours. 12h is the default
+      expire-time: 10   # in hours. Default is 12h

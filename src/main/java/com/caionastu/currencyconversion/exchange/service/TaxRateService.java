@@ -21,14 +21,20 @@ public class TaxRateService {
 
     public BigDecimal get(ConversionRequest request) {
         if (request.isSameCurrency()) {
+            log.error("Error converting two currencies that are the same.");
             throw new SameCurrencyConversionException(request.getOriginCurrency());
         }
 
+        log.info("Retrieving cached taxes rates.");
         ExchangeResponse response = cacheService.get();
+
+        log.info("Calculating tax rate.");
 
         BigDecimal originRate = response.getTaxRate(request.getOriginCurrency());
         BigDecimal destinyRate = response.getTaxRate(request.getDestinyCurrency());
+        BigDecimal taxRate = destinyRate.divide(originRate, DEFAULT_SCALE, RoundingMode.HALF_EVEN);
 
-        return destinyRate.divide(originRate, DEFAULT_SCALE, RoundingMode.HALF_EVEN);
+        log.info("Tax rate obtained: {}", taxRate);
+        return taxRate;
     }
 }
