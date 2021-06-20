@@ -10,6 +10,10 @@ import com.caionastu.currencyconversion.exchange.service.TaxRateService;
 import com.caionastu.currencyconversion.user.domain.User;
 import com.caionastu.currencyconversion.user.exception.UserNotFoundException;
 import com.caionastu.currencyconversion.user.repository.UserRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -28,6 +32,7 @@ import java.util.UUID;
 @RequestMapping(path = "/api/v1/conversions")
 @AllArgsConstructor
 @Slf4j
+@Api(tags = "Conversion Operations")
 public class ConversionController {
 
     private final UserRepository userRepository;
@@ -36,6 +41,11 @@ public class ConversionController {
 
     @ApiPageable
     @GetMapping(path = "/user/{userId}")
+    @ApiOperation("Retrieve all conversion transactions from user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful Operation"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
     public ResponseEntity<ApiCollectionResponse<ConversionResponse>> findByUser(@PathVariable UUID userId, @ApiIgnore Pageable pageable) {
         log.info("Receiving request to find all conversion transactions from user: {}.", userId);
 
@@ -59,6 +69,13 @@ public class ConversionController {
     }
 
     @PostMapping
+    @ApiOperation("Make a conversion between two different currencies")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful Operation"),
+            @ApiResponse(code = 400, message = "Invalid Request"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Fail to communicate with Exchange Api or trying to make a conversion with same currency.")
+    })
     public ResponseEntity<ConversionResponse> convert(@RequestBody @Valid ConversionRequest request) {
         log.info("Receiving request to convert two currencies. Request: {}.", request);
 
