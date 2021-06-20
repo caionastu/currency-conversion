@@ -35,20 +35,20 @@ public class ConversionController {
     @ApiPageable
     @GetMapping(path = "/user/{userId}")
     public ResponseEntity<ApiCollectionResponse<ConversionResponse>> findByUser(@PathVariable UUID userId, @ApiIgnore Pageable pageable) {
-        log.info("Receiving request to find all conversion transactions from user: {}", userId);
+        log.info("Receiving request to find all conversion transactions from user: {}.", userId);
 
         Page<ConversionResponse> conversions = repository.findByUserId(userId, pageable)
                 .map(ConversionResponse::from);
 
         ApiCollectionResponse<ConversionResponse> response = ApiCollectionResponse.from(conversions);
 
-        log.info("Retrieving all conversion transactions from user: {}", userId);
+        log.info("Retrieving all conversion transactions from user: {}.", userId);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
     public ResponseEntity<ConversionResponse> convert(@RequestBody @Valid ConversionRequest request) {
-        log.info("Receiving request to convert two currencies. Request: {}", request);
+        log.info("Receiving request to convert two currencies. Request: {}.", request);
 
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> {
@@ -63,7 +63,7 @@ public class ConversionController {
         Conversion conversion = Conversion.from(request, taxRate, user);
         repository.save(conversion);
 
-        log.info("Conversion transaction saved in database. Id: {}", conversion);
+        log.info("Conversion transaction saved in database. Id: {}.", conversion.getId());
 
         ConversionResponse response = ConversionResponse.from(conversion);
 

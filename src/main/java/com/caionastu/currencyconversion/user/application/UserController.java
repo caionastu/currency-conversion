@@ -28,20 +28,20 @@ public class UserController {
     @ApiPageable
     @GetMapping
     public ResponseEntity<ApiCollectionResponse<UserResponse>> findAll(@ApiIgnore Pageable pageable) {
-        log.info("Receiving request to find all users");
+        log.info("Receiving request to find all users.");
 
         Page<UserResponse> users = repository.findAll(pageable)
                 .map(UserResponse::from);
 
         ApiCollectionResponse<UserResponse> response = ApiCollectionResponse.from(users);
 
-        log.info("Retrieving all users");
+        log.info("Retrieving all users.");
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
     public ResponseEntity<UserResponse> create(@RequestBody @Valid CreateUserRequest request) {
-        log.info("Receiving request to create new user with name: {}", request.getName());
+        log.info("Receiving request to create new user with name: {}.", request.getName());
 
         repository.findByName(request.getName())
                 .ifPresent(user -> {
@@ -52,7 +52,7 @@ public class UserController {
         User newUser = request.toEntity();
         repository.save(newUser);
 
-        log.info("User created. Id: {}", newUser.getId());
+        log.info("User created. Id: {}.", newUser.getId());
 
         UserResponse response = UserResponse.from(newUser);
         return ResponseEntity.ok(response);
