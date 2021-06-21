@@ -52,6 +52,12 @@ Or from docker pull command:
 docker pull bolska/currency-conversion
 ```
 
+And run the command:
+```
+docker run -p 8080:8080 bolska/currency-conversion:latest
+```
+
+
 ### IDE
 
 You will need:
