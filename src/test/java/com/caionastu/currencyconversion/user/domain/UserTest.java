@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Tag("unit")
-public class UserTest {
+class UserTest {
 
     @Test
     @DisplayName("It should create user from CreateUserRequest.")

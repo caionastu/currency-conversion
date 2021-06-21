@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @Tag("unit")
-public class TaxRateServiceTest {
+class TaxRateServiceTest {
 
     private TaxRateService service;
     private TaxRateCacheService cacheService;

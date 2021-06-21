@@ -6,11 +6,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
 public class BusinessException extends RuntimeException {
 
-    @Getter
     private final String keyMessage;
-
     private List<Object> arguments = new ArrayList<>();
 
     public BusinessException(String keyMessage) {

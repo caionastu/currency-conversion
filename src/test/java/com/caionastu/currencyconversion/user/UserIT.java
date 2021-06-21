@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 @Sql(value = "classpath:script/initial-insert.sql")
-public class UserIT {
+class UserIT {
 
     @Autowired
     private MockMvc mockMvc;

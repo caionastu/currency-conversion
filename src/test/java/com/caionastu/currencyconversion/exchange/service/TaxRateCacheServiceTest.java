@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @Tag("unit")
-public class TaxRateCacheServiceTest {
+class TaxRateCacheServiceTest {
 
     private ExchangeService exchangeService;
     private TaxRateCacheService cacheService;

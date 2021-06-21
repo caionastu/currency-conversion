@@ -49,11 +49,10 @@ public class ConversionController {
     public ResponseEntity<ApiCollectionResponse<ConversionResponse>> findByUser(@PathVariable UUID userId, @ApiIgnore Pageable pageable) {
         log.info("Receiving request to find all conversion transactions from user: {}.", userId);
 
-        userRepository.findById(userId)
-                .orElseThrow(() -> {
-                    log.error("User not find with id: {}", userId);
-                    throw new UserNotFoundException(userId);
-                });
+        if (userRepository.existsById(userId)) {
+            log.error("User not found with id: {}", userId);
+            throw new UserNotFoundException(userId);
+        }
 
         if (!pageable.getSort().isSorted()) {
             pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "date"));

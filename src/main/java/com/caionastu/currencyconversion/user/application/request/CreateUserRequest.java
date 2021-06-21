@@ -1,6 +1,5 @@
 package com.caionastu.currencyconversion.user.application.request;
 
-import com.caionastu.currencyconversion.user.domain.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
