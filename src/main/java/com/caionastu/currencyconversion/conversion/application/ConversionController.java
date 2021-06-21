@@ -49,7 +49,7 @@ public class ConversionController {
     public ResponseEntity<ApiCollectionResponse<ConversionResponse>> findByUser(@PathVariable UUID userId, @ApiIgnore Pageable pageable) {
         log.info("Receiving request to find all conversion transactions from user: {}.", userId);
 
-        if (userRepository.existsById(userId)) {
+        if (!userRepository.existsById(userId)) {
             log.error("User not found with id: {}", userId);
             throw new UserNotFoundException(userId);
         }
