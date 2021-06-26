@@ -58,11 +58,10 @@ public class UserController {
     public ResponseEntity<UserResponse> create(@RequestBody @Valid CreateUserRequest request) {
         log.info("Receiving request to create new user with name: {}.", request.getName());
 
-        repository.findByName(request.getName())
-                .ifPresent(user -> {
-                    log.error("Error creating user. Name {} is already in use.", request.getName());
-                    throw new UserAlreadyExistException(request.getName());
-                });
+        if (repository.existsByName(request.getName())) {
+            log.error("Error creating user. Name {} is already in use.", request.getName());
+            throw new UserAlreadyExistException(request.getName());
+        }
 
         User newUser = User.from(request);
         repository.save(newUser);
